@@ -12,12 +12,12 @@ class Lines():
         self.angle = angle
         self.origin = ((self.startPos.x + self.endPos.x) / 2, (self.startPos.y + self.endPos.y) / 2)
 
-    def update(self):
-        self.rotateLine(0.5)
+    def update(self, degress):
+        self.rotateLine(degress)
 
     def draw(self, window):
         pg.draw.line(window, self.color, self.startPos, self.endPos, self.width)
-        pg.draw.circle(window, (255, 0, 0), self.origin, 4)
+        #pg.draw.circle(window, (255, 0, 0), self.origin, 4)
 
     def rotateLine(self, degrees):
 

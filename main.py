@@ -21,6 +21,7 @@ class MainProgram():
         self.radius = 350
         self.circle = Circle((self.width/2, self.height/2), self.radius, 2)
 
+        self.degress = 0.05
 
         self.R = 300
         self.rn = self.R * random.uniform(0, 1)
@@ -34,9 +35,10 @@ class MainProgram():
         self.n = 200
         for x in range(self.n):
             randColor = (random.uniform(0, 256), random.uniform(0, 256), random.uniform(0, 256))
+            color = (255, 255, 255)
             angle = (2*math.pi)/self.n
             endpos = math.cos(angle * x) * self.radius + self.width/2, math.sin(angle * x) * self.radius + self.height/2
-            self.line = Lines(vector(self.rPos), vector(endpos), angle * x, (255, 255, 255), 3)
+            self.line = Lines(vector(self.rPos), vector(endpos), angle * x, color, 3)
             self.lines.append(self.line)
 
     def run(self):
@@ -44,11 +46,25 @@ class MainProgram():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_SPACE:
+                        if self.degress == 0:
+                            self.degress = 0.05
+                        else:
+                            self.degress = 0
+
+                    if event.key == pg.K_UP:
+                        self.degress += 0.05
+                        print(self.degress)
+                    if event.key == pg.K_DOWN:
+                        self.degress -= 0.05
+                        print(self.degress)
+
             self.window.fill((25, 25, 25))
             self.circle.draw(self.window)
             for line in self.lines:
                 line.draw(self.window)
-                line.update()
+                line.update(self.degress)
             self.point_In_Circle.draw(self.window)
             pygame.display.update()
             self.clock.tick(144)
